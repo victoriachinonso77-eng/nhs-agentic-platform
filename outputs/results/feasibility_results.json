@@ -1,0 +1,93 @@
+[
+  {
+    "metric": "Task Completion Time (mins)",
+    "baseline_mean": 46.043,
+    "ai_mean": 29.161,
+    "improvement": 16.882,
+    "improvement_pct": 36.7,
+    "test_used": "Paired t-test",
+    "p_value": 0.0,
+    "significant": true,
+    "cohens_d": 1.83,
+    "practically_significant": true,
+    "verdict": "FEASIBLE"
+  },
+  {
+    "metric": "Documentation Errors (per shift)",
+    "baseline_mean": 3.24,
+    "ai_mean": 1.61,
+    "improvement": 1.63,
+    "improvement_pct": 50.3,
+    "test_used": "Wilcoxon signed-rank",
+    "p_value": 0.0,
+    "significant": true,
+    "cohens_d": 0.835,
+    "practically_significant": true,
+    "verdict": "FEASIBLE"
+  },
+  {
+    "metric": "SBAR Compliance Rate (%)",
+    "baseline_mean": 60.439,
+    "ai_mean": 78.551,
+    "improvement": 18.111,
+    "improvement_pct": 30.0,
+    "test_used": "Paired t-test",
+    "p_value": 0.0,
+    "significant": true,
+    "cohens_d": 1.994,
+    "practically_significant": true,
+    "verdict": "FEASIBLE"
+  },
+  {
+    "metric": "ED Wait Time (hours)",
+    "baseline_mean": 10.782,
+    "ai_mean": 8.403,
+    "improvement": 2.38,
+    "improvement_pct": 22.1,
+    "test_used": "Paired t-test",
+    "p_value": 0.0,
+    "significant": true,
+    "cohens_d": 0.841,
+    "practically_significant": true,
+    "verdict": "FEASIBLE"
+  },
+  {
+    "metric": "Cognitive Load NASA-TLX (/100)",
+    "baseline_mean": 71.839,
+    "ai_mean": 53.571,
+    "improvement": 18.269,
+    "improvement_pct": 25.4,
+    "test_used": "Paired t-test",
+    "p_value": 0.0,
+    "significant": true,
+    "cohens_d": 1.829,
+    "practically_significant": true,
+    "verdict": "FEASIBLE"
+  },
+  {
+    "metric": "Query Resolution Time (mins)",
+    "baseline_mean": 38.609,
+    "ai_mean": 17.603,
+    "improvement": 21.006,
+    "improvement_pct": 54.4,
+    "test_used": "Paired t-test",
+    "p_value": 0.0,
+    "significant": true,
+    "cohens_d": 3.846,
+    "practically_significant": true,
+    "verdict": "FEASIBLE"
+  },
+  {
+    "metric": "Security Incidents (per shift)",
+    "baseline_mean": 1.82,
+    "ai_mean": 1.13,
+    "improvement": 0.69,
+    "improvement_pct": 37.9,
+    "test_used": "Wilcoxon signed-rank",
+    "p_value": 0.0,
+    "significant": true,
+    "cohens_d": 0.509,
+    "practically_significant": true,
+    "verdict": "FEASIBLE"
+  }
+]

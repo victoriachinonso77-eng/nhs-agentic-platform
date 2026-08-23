@@ -1,0 +1,21 @@
+# Environment variables / secrets — CRITICAL, never commit these
+.env
+*.env
+secrets.toml
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+*.egg-info/
+
+# Trained models — large binary files, don't belong in git
+*.h5
+*.pkl
+
+# OS / editor clutter
+.DS_Store
+.vscode/
+.idea/
