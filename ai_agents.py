@@ -178,7 +178,9 @@ def run_full_cycle_ai():
     for r in results:
         if "error" in r:
             failed += 1
-            st.error(f"DEBUG — {r['agent']}: {r['error']}")
+            if "debug_errors" not in st.session_state:
+                st.session_state.debug_errors = []
+            st.session_state.debug_errors.append(f"{r['agent']}: {r['error']}")
             write_event(
                 agent=r["agent"], action="ai_generation_failed", duration_ms=round(elapsed * 1000, 1),
                 input_summary="GPT-4o call", output_summary=f"Error: {r['error']}",
