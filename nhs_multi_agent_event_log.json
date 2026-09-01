@@ -1,7 +1,7 @@
 [
   {
-    "timestamp": "2026-08-22T13:46:26.338677",
-    "elapsed_seconds": 48.767,
+    "timestamp": "2026-09-01T22:41:20.378454",
+    "elapsed_seconds": 21.748,
     "agent": "Login System",
     "action": "handoff",
     "duration_ms": 0.5,
@@ -10,83 +10,83 @@
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.352145",
-    "elapsed_seconds": 67.78,
+    "timestamp": "2026-09-01T22:41:27.890893",
+    "elapsed_seconds": 29.26,
     "agent": "Documentation Agent",
     "action": "generate_recommendation",
     "duration_ms": 0.8,
     "input_summary": "target=Robert Adeniran",
-    "output_summary": "Draft SBAR clinical note immediately. \u2014 rationale: Robert Adeniran has the highest risk score of 91% among patients with overdue notes, indicating a critical need for immediate attention.",
+    "output_summary": "Draft SBAR clinical note immediately \u2014 rationale: Robert Adeniran has the highest risk score of 91% among patients with overdue notes, indicating a critical need for immediate attention.",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.396781",
-    "elapsed_seconds": 67.825,
+    "timestamp": "2026-09-01T22:41:27.891769",
+    "elapsed_seconds": 29.261,
     "agent": "Handover Agent",
     "action": "generate_recommendation",
     "duration_ms": 0.8,
     "input_summary": "target=James Okafor",
-    "output_summary": "Complete the assessment and recommendation sections. \u2014 rationale: James Okafor has a priority 1 status and is missing both the assessment and recommendation sections, which are critical for immediate clinical decision-making.",
+    "output_summary": "Complete the assessment and recommendation sections. \u2014 rationale: James Okafor has the highest clinical priority (1) and is missing two critical SBAR sections, indicating an urgent need for a complete handover to ensure appropriate care decisions.",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.397610",
-    "elapsed_seconds": 67.826,
+    "timestamp": "2026-09-01T22:41:27.892864",
+    "elapsed_seconds": 29.262,
     "agent": "Workflow Agent",
     "action": "generate_recommendation",
     "duration_ms": 0.8,
     "input_summary": "target=Ward C",
-    "output_summary": "Reallocate resources to Ward C to mitigate high bottleneck risk. \u2014 rationale: Ward C has the highest risk at 91%, indicating an urgent need for resource reallocation to prevent potential bottlenecks.",
+    "output_summary": "Reallocate resources to Ward C. \u2014 rationale: Ward C has the highest risk at 91%, indicating an urgent need for resource reallocation to prevent bottlenecks.",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.399014",
-    "elapsed_seconds": 67.827,
+    "timestamp": "2026-09-01T22:41:27.893879",
+    "elapsed_seconds": 29.263,
     "agent": "Cognitive Support Agent",
     "action": "generate_recommendation",
     "duration_ms": 0.8,
     "input_summary": "session-wide",
-    "output_summary": "Activate decision-queue scaffolding. \u2014 rationale: The current NASA-TLX score is 92, which is well above the threshold of 60, indicating a high cognitive load that warrants additional support.",
+    "output_summary": "Activate decision-queue scaffolding \u2014 rationale: The NASA-TLX score is 92, which is well above the threshold of 60, indicating a high cognitive load.",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.403163",
-    "elapsed_seconds": 67.831,
+    "timestamp": "2026-09-01T22:41:27.895447",
+    "elapsed_seconds": 29.265,
     "agent": "Integration Agent",
     "action": "generate_recommendation",
     "duration_ms": 0.8,
     "input_summary": "target=Robert Adeniran",
-    "output_summary": "Cross-verify Robert Adeniran's records across EPR, NHS Spine, Pharmacy, RIS, and LIS. \u2014 rationale: Robert Adeniran is the highest-risk patient at 91%, necessitating immediate cross-system verification to ensure all data is accurate and up-to-date for optimal care management.",
+    "output_summary": "Cross-verify Robert Adeniran's records across EPR, NHS Spine, Pharmacy, RIS, and LIS. \u2014 rationale: Robert Adeniran is the highest-risk patient at 91%, necessitating immediate cross-system verification to ensure all critical information is accurate and up-to-date for optimal care management.",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.406038",
-    "elapsed_seconds": 67.834,
+    "timestamp": "2026-09-01T22:41:27.896793",
+    "elapsed_seconds": 29.266,
     "agent": "Coordination Agent",
     "action": "generate_recommendation",
     "duration_ms": 0.8,
-    "input_summary": "target=patient_medication_reminder",
-    "output_summary": "Send automated reminder to patient to take their medication. \u2014 rationale: The system can safely send reminders for medication adherence based on the prescribed schedule, ensuring patients take their medication on time without clinician intervention.",
+    "input_summary": "session-wide",
+    "output_summary": "Auto-resolve request to restock non-critical medical supplies. \u2014 rationale: Restocking non-critical supplies is a routine task that follows a predefined checklist and does not require clinical judgment.",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.407072",
-    "elapsed_seconds": 67.835,
+    "timestamp": "2026-09-01T22:41:27.897488",
+    "elapsed_seconds": 29.267,
     "agent": "Security Agent",
     "action": "generate_recommendation",
     "duration_ms": 0.8,
     "input_summary": "session-wide",
-    "output_summary": "Conduct routine audit of user access logs. \u2014 rationale: Regular audits ensure compliance with access policies and help identify any unusual patterns even at low threat levels.",
+    "output_summary": "Conduct routine audit of access logs. \u2014 rationale: Regular audits ensure compliance with security protocols and help identify any unusual access patterns, even at low threat levels.",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   },
   {
-    "timestamp": "2026-08-22T13:46:45.407948",
-    "elapsed_seconds": 67.836,
+    "timestamp": "2026-09-01T22:41:27.898203",
+    "elapsed_seconds": 29.267,
     "agent": "AutoGen-style Orchestrator (GPT-4o)",
     "action": "handoff",
     "duration_ms": 0.5,
     "input_summary": "\u2192 Clinician Review Queue",
-    "output_summary": "AI-driven cycle complete in 12.91s \u2014 7 recommendations generated, 0 failed (check API key / network)",
+    "output_summary": "AI-driven cycle complete in 5.23s \u2014 7 recommendations generated, 0 failed (check API key / network)",
     "clinician": "Dr. A. Okonkwo \u2014 Consultant"
   }
 ]
