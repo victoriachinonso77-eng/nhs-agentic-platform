@@ -155,7 +155,7 @@ def run_full_cycle_ai():
     from shared_state import queue_recommendation, log_handoff, write_event
 
     start = time.perf_counter()
-    api_key = os.getenv("OPENAI_API_KEY", "")
+    api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", ""))
     contexts = _build_all_contexts()  # main thread — safe
     agent_names = list(AGENT_PERSONAS.keys())
 
