@@ -155,7 +155,12 @@ def run_full_cycle_ai():
     from shared_state import queue_recommendation, log_handoff, write_event
 
     start = time.perf_counter()
-    api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", ""))
+    try:
+        api_key = st.secrets.get("OPENAI_API_KEY", "")
+    except Exception:
+        api_key = ""
+    if not api_key:
+        api_key = os.getenv("OPENAI_API_KEY", "")
     contexts = _build_all_contexts()  # main thread — safe
     agent_names = list(AGENT_PERSONAS.keys())
 
@@ -173,6 +178,7 @@ def run_full_cycle_ai():
     for r in results:
         if "error" in r:
             failed += 1
+            st.error(f"DEBUG — {r['agent']}: {r['error']}")
             write_event(
                 agent=r["agent"], action="ai_generation_failed", duration_ms=round(elapsed * 1000, 1),
                 input_summary="GPT-4o call", output_summary=f"Error: {r['error']}",
