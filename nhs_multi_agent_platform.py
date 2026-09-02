@@ -313,7 +313,7 @@ with tab_overview:
             with st.expander("Why?", expanded=False):
                 st.caption(rec["rationale"])
             rc1, rc2 = st.columns(2)
-            if rc1.button(" Approve", key=f"approve_{rec['id']}", use_container_width=True):
+            if rc1.button("✅ Approve", key=f"approve_{rec['id']}", use_container_width=True):
                 apply_recommendation(rec)
                 st.session_state.pending_recommendations.remove(rec)
                 st.rerun()
@@ -322,7 +322,7 @@ with tab_overview:
                             f"[Rejected] {rec['summary']}", "critical")
                 st.session_state.pending_recommendations.remove(rec)
                 st.rerun()
-        if st.button(" Approve All", use_container_width=True):
+        if st.button("✅ Approve All", use_container_width=True):
             for rec in list(st.session_state.pending_recommendations):
                 apply_recommendation(rec)
             st.session_state.pending_recommendations = []
@@ -353,8 +353,8 @@ with tab_overview:
     st.markdown("#### Patient Roster")
     for p in sorted(st.session_state.shared_patients, key=lambda x: x["priority"]):
         risk_color = "#B91C1C" if p["risk_score"] > 0.7 else "#B45309" if p["risk_score"] > 0.4 else "#1F7A4D"
-        doc_icon = "" if p["documented"] else "📝"
-        sbar_icon = "" if all(p["sbar"].values()) else "⚠️"
+        doc_icon = "✅" if p["documented"] else "📝"
+        sbar_icon = "✅" if all(p["sbar"].values()) else "⚠️"
         st.markdown(f"""<div class="patient-card" style="padding:8px 12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div>
@@ -371,7 +371,9 @@ with tab_overview:
     render_chatbot(
         "Command Centre (all 7 agents)",
         f"Occupancy: {st.session_state.occupancy}%. Overdue docs: {st.session_state.overdue_docs}. "
-        f"NASA-TLX: {recalc_nasa_tlx()}/100. Total handoffs logged: {len(st.session_state.handoff_log)}.",
+        f"NASA-TLX: {recalc_nasa_tlx()}/100. Total handoffs logged: {len(st.session_state.handoff_log)}. "
+        f"Ward bottleneck risk (XGBoost predictions): "
+        f"{', '.join(f'{w} {r:.0%}' for w, r in st.session_state.shared_ward_risk.items())}.",
         key_prefix="overview_agent"
     )
 
@@ -425,7 +427,7 @@ with tab_handover:
         st.markdown(f"""<div class="patient-card" style="border-color:{border};">
             <b>{p['name']}</b>: P{p['priority']} · Risk {p['risk_score']:.0%}<br>
             <span style="font-size:0.8rem;color:#5A6B7D;">
-                {' SBAR complete' if complete else '⚠️ Missing: ' + ', '.join(missing)}
+                {'✅ SBAR complete' if complete else '⚠️ Missing: ' + ', '.join(missing)}
             </span>
         </div>""", unsafe_allow_html=True)
         if not complete:
@@ -518,7 +520,7 @@ with tab_integration:
     if st.button("Query 5 NHS systems", key="int_query"):
         with st.spinner("Querying EPR, NHS Spine, Pharmacy, RIS, LIS..."):
             time.sleep(0.8)
-        st.success(f" {p['name']} data consolidated in 2.3 seconds")
+        st.success(f"✅ {p['name']} data consolidated in 2.3 seconds")
         st.markdown(f"""
         - **EPR:** {p['diagnosis']}
         - **NHS Spine:** {p['nhs']}, DOB verified
@@ -600,7 +602,7 @@ with tab_security:
                     "critical")
         st.rerun()
     if st.session_state.security_threat_level != "LOW":
-        if st.button(" Clinician/IG sign-off: contain and restore"):
+        if st.button("✅ Clinician/IG sign-off: contain and restore"):
             st.session_state.security_threat_level = "LOW"
             log_handoff("Security Agent", "Command Centre", "Anomaly contained, access restored after sign-off", "success")
             st.rerun()
