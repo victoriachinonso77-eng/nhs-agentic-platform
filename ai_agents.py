@@ -1,5 +1,5 @@
 """
-NHS Multi-Agent Platform — AI-Driven Agent Reasoning
+NHS Multi-Agent Platform: AI-Driven Agent Reasoning
 Each of the seven agents makes a genuine GPT-4o call to decide its own
 recommendation, rather than the deterministic Python logic in
 run_full_cycle(). Calls run in parallel (ThreadPoolExecutor) to keep
@@ -9,7 +9,7 @@ IMPORTANT: Streamlit's st.session_state is only accessible from the main
 script thread. All session_state reads happen here BEFORE the thread
 pool is spawned, and all session_state writes happen AFTER the thread
 pool has finished and results are collected back on the main thread.
-The worker threads only ever see plain Python strings — never
+The worker threads only ever see plain Python strings: never
 st.session_state directly.
 
 LD7326 | MSc Artificial Intelligence Technology | W25041744
@@ -25,41 +25,58 @@ AGENT_PERSONAS = {
     "Documentation Agent": (
         "You are the Documentation Agent in an NHS ward AI platform. Your job is to decide "
         "which ONE patient most urgently needs their SBAR clinical note drafted this cycle, "
-        "based on risk score and whether a note is already overdue. "
-        "Respond ONLY with JSON: {\"target\": \"<patient name>\", \"summary\": \"<one-line action>\", "
+        "based on risk score and whether a note is already overdue. Your summary MUST include "
+        "a short drafted note excerpt (Situation + Background, one sentence each, using the "
+        "patient's real diagnosis/risk data given to you): not just 'note drafted'. "
+        "Respond ONLY with JSON: {\"target\": \"<patient name>\", "
+        "\"summary\": \"<patient name>: S: <one sentence>. B: <one sentence>.\", "
         "\"rationale\": \"<why this patient, this cycle>\"}"
     ),
     "Handover Agent": (
         "You are the Handover Agent in an NHS ward AI platform. Your job is to decide which "
         "ONE patient's incomplete SBAR handover most urgently needs completing this cycle, "
-        "prioritising by clinical priority and how many SBAR sections are missing. "
-        "Respond ONLY with JSON: {\"target\": \"<patient name>\", \"summary\": \"<one-line action>\", "
+        "prioritising by clinical priority and how many SBAR sections are missing. Name the "
+        "SPECIFIC missing sections explicitly in your summary. "
+        "Respond ONLY with JSON: {\"target\": \"<patient name>\", "
+        "\"summary\": \"Complete <section names> for <patient name>\", "
         "\"rationale\": \"<why this patient, this cycle>\"}"
     ),
     "Workflow Agent": (
         "You are the Workflow Agent in an NHS ward AI platform. Your job is to decide which "
         "ONE ward most urgently needs a resource reallocation this cycle, based on bottleneck risk. "
-        "Respond ONLY with JSON: {\"target\": \"<ward name>\", \"summary\": \"<one-line action>\", "
-        "\"rationale\": \"<why this ward, this cycle>\"}"
+        "You MUST name a SPECIFIC resource and quantity, not a vague 'reallocate resources': "
+        "use this rule: risk >80% = '1 additional nurse + flag for consultant review'; "
+        "risk 50-80% = '1 additional nurse'; risk <50% = no action needed for that ward. "
+        "Respond ONLY with JSON: {\"target\": \"<ward name>\", "
+        "\"summary\": \"Send <specific resource> to <ward name>\", "
+        "\"rationale\": \"<why this ward, this cycle, citing the risk %>\"}"
     ),
     "Cognitive Support Agent": (
         "You are the Cognitive Support Agent in an NHS ward AI platform. Based on the current "
         "NASA-TLX cognitive load score, decide whether decision-queue scaffolding should activate "
-        "this cycle (threshold: >60). "
-        "Respond ONLY with JSON: {\"target\": null, \"summary\": \"<one-line decision>\", "
+        "this cycle (threshold: >60). If activating, you MUST name SPECIFIC lower-priority tasks "
+        "or patients being deferred to reduce load (pick from the context given), not just "
+        "'scaffolding activated': this is the concrete action that actually reduces the load. "
+        "Respond ONLY with JSON: {\"target\": null, "
+        "\"summary\": \"Deferred: <specific task/patient names> to reduce load\", "
         "\"rationale\": \"<why, referencing the actual NASA-TLX number>\"}"
     ),
     "Integration Agent": (
         "You are the Integration Agent in an NHS ward AI platform. Decide which ONE patient's "
         "record most needs cross-system verification this cycle (EPR, NHS Spine, Pharmacy, RIS, LIS), "
-        "prioritising the highest-risk patient. "
-        "Respond ONLY with JSON: {\"target\": \"<patient name>\", \"summary\": \"<one-line action>\", "
+        "prioritising the highest-risk patient. Your summary MUST list all 5 systems with a check "
+        "result for each, so the verification is concrete and visible, not just 'verification done'. "
+        "Respond ONLY with JSON: {\"target\": \"<patient name>\", "
+        "\"summary\": \"<patient name> verified: EPR OK, Spine OK, Pharmacy OK, RIS OK, LIS OK\", "
         "\"rationale\": \"<why this patient, this cycle>\"}"
     ),
     "Coordination Agent": (
-        "You are the Coordination Agent in an NHS ward AI platform. Decide on ONE routine query "
-        "this cycle that can be auto-resolved without clinician input. "
-        "Respond ONLY with JSON: {\"target\": null, \"summary\": \"<one-line action>\", "
+        "You are the Coordination Agent in an NHS ward AI platform. Decide on ONE routine "
+        "checklist-based query this cycle that can be auto-resolved without clinician input "
+        "(e.g. a discharge checklist). You MUST produce the ACTUAL checklist as 3-4 concrete "
+        "items with a status each, not just 'checklist verified'. "
+        "Respond ONLY with JSON: {\"target\": null, "
+        "\"summary\": \"Checklist: 1) <item>: done 2) <item>: done 3) <item>: done\", "
         "\"rationale\": \"<why this is safely auto-resolvable>\"}"
     ),
     "Security Agent": (
@@ -72,7 +89,7 @@ AGENT_PERSONAS = {
 
 
 def _build_all_contexts():
-    """Runs on the MAIN thread only — reads st.session_state and builds
+    """Runs on the MAIN thread only: reads st.session_state and builds
     a plain dict of {agent_name: context_string}. Nothing here is passed
     a Streamlit object; only plain strings leave this function."""
     patients = st.session_state.shared_patients
@@ -113,7 +130,7 @@ def _build_all_contexts():
 
 
 def _call_one_agent(agent_name, context, api_key):
-    """Runs inside a worker thread. Receives only plain strings — NEVER
+    """Runs inside a worker thread. Receives only plain strings: NEVER
     touches st.session_state, so it's safe to run off the main thread."""
     if not api_key or api_key.startswith("sk-proj-your-key"):
         return {"agent": agent_name, "error": "No OPENAI_API_KEY configured"}
@@ -161,7 +178,7 @@ def run_full_cycle_ai():
         api_key = ""
     if not api_key:
         api_key = os.getenv("OPENAI_API_KEY", "")
-    contexts = _build_all_contexts()  # main thread — safe
+    contexts = _build_all_contexts()  # main thread: safe
     agent_names = list(AGENT_PERSONAS.keys())
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=7) as executor:
@@ -174,7 +191,7 @@ def run_full_cycle_ai():
     elapsed = time.perf_counter() - start
     succeeded, failed = 0, 0
 
-    # Everything below is back on the main thread — safe to touch session_state
+    # Everything below is back on the main thread: safe to touch session_state
     for r in results:
         if "error" in r:
             failed += 1
@@ -190,7 +207,7 @@ def run_full_cycle_ai():
         queue_recommendation(r["agent"], "ai_generated", r["target"], r["summary"], r["rationale"])
 
     log_handoff("AutoGen-style Orchestrator (GPT-4o)", "Clinician Review Queue",
-                f"AI-driven cycle complete in {elapsed:.2f}s — {succeeded} recommendations generated, "
+                f"AI-driven cycle complete in {elapsed:.2f}s: {succeeded} recommendations generated, "
                 f"{failed} failed (check API key / network)", "info" if failed == 0 else "critical")
 
     return succeeded, failed, elapsed
